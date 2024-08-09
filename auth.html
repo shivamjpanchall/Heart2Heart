@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"> </script>
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<title>Heart2Heart Admin</title>
+</head>
+<body>
+<div class="navbar navbar-default">
+<div class="navbar-header">
+  <a class="navbar-brand" href="auth.html">Heart2Heart Application Admin Page</a>
+  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse" aria-expanded="false" aria-controls="navbar">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+  </button>
+</div>
+<div class="navbar-collapse collapse"  >
+    <ul class="nav navbar-nav navbar-right">
+         <li><a href="#" id="homee" style="display: none;">Click Here For Home Screen</a></li>
+    </ul>
+</div>
+</div>
+<br>
+<div class="container">	
+
+	<div class="col-sm-4">
+		<img src="full_logo-removebg-preview.png"  width="340" 
+		height="340" />
+	</div>
+	<form name="login_form" id="login_form" method="post" action="#" enctype="multipart/form-data" >
+	<div class="col-sm-4">
+		<div class="form-group">
+	      <label for="email">Email</label>
+		  <input type="text" name="login_email" id="login_email" class="form-control" placeholder="Enter your email">
+		</div>
+		
+		<div class="form-group">
+	      <label for="password">Password</label>
+		  <input type="password" name="login_password" id="login_password" class="form-control"  placeholder="Enter your password">
+		</div>
+		<button type="button" id="login" name="login" class="btn btn-success">Login</button>
+	</div>
+	
+  </div>	
+  </form>
+<br>
+</body>
+	<script type="module">
+	  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+	  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-analytics.js";
+	  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } 
+	  from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+
+	  const firebaseConfig = {
+	    apiKey: "AIzaSyCrZ_1SU4MKR7aYYB-dGyUrhpdSLyDxZEQ",
+		authDomain: "heart2heart-real.firebaseapp.com",
+		databaseURL: "https://heart2heart-real-default-rtdb.firebaseio.com",
+		projectId: "heart2heart-real",
+		storageBucket: "heart2heart-real.appspot.com",
+		messagingSenderId: "788543523208",
+		appId: "1:788543523208:web:8c121d3440bfe3731bd23d",
+		measurementId: "G-7QSKBGXFV9"
+	  };
+
+	  const app = initializeApp(firebaseConfig);
+	  const analytics = getAnalytics(app);
+	  const auth = getAuth();
+	  console.log(app);
+
+	  document.getElementById("login").addEventListener("click", function() {
+		  var email =  document.getElementById("login_email").value;
+		  var password = document.getElementById("login_password").value;
+
+		  signInWithEmailAndPassword(auth, email, password)
+		  .then((userCredential) => {
+		    const user = userCredential.user;
+		    console.log(user);
+		    alert(user.email+" Login successfully!!!");
+		    document.getElementById('homee').style.display = 'block';
+		  })
+		  .catch((error) => {
+		    const errorCode = error.code;
+		    const errorMessage = error.message;
+		    console.log(errorMessage);
+		    alert(errorMessage);
+		  });		  		  
+	  });
+
+	  document.getElementById("homee").addEventListener("click", function() {
+		location.href = "home.html"
+	  });
+	</script>
+</html>
